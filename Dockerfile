@@ -1,23 +1,23 @@
-# Imagen base ligera y estable de Node
+# Imagen base ligera de Node
 FROM node:20-alpine
 
-# Instalar dependencias básicas de compilación
+# Instalar dependencias necesarias para compilación y librerías nativas
 RUN apk add --no-cache python3 make g++
 
 # Directorio de trabajo
 WORKDIR /app
 
-# Copiar todos los archivos del proyecto
+# Copiar archivos del proyecto
 COPY . .
 
 # Instalar herramientas globales necesarias
 RUN npm install -g pnpm turbo
 
-# Instalar dependencias del proyecto y construir
-RUN pnpm install && pnpm run build
+# Instalar dependencias del proyecto
+RUN pnpm install
 
-# Exponer el puerto por defecto de n8n
+# Exponer el puerto de n8n
 EXPOSE 5678
 
-# Iniciar n8n
+# Comando de inicio (sin build)
 CMD ["pnpm", "start"]
